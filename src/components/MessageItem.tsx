@@ -1,3 +1,5 @@
+import { formatTimestamp } from '../helpers';
+
 import { Sender, type Message } from '../types';
 
 interface MessageProps {
@@ -7,10 +9,7 @@ interface MessageProps {
 export const MessageItem = ({ message }: MessageProps) => {
   const { sender, text, unread, date } = message;
 
-  const timestamp = new Date(date).toLocaleTimeString('en-GB', {
-    hour: '2-digit',
-    minute: '2-digit',
-  });
+  const timestamp = formatTimestamp(date);
 
   return (
     <li
