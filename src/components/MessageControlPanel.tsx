@@ -40,8 +40,8 @@ export const MessageControlPanel = ({
   };
 
   return (
-    <div className="h-[100px] px-4 py-5 bg-gray-800 flex justify-between">
-      <div className="w-[62%] flex items-center gap-2">
+    <div className="lg:h-[100px] px-4 py-5 bg-gray-800 flex justify-between flex-col lg:flex-row gap-4">
+      <div className="w-full lg:w-[62%] flex items-center gap-2">
         <input
           value={newMessage}
           onChange={e => setNewMessage(e.target.value)}
@@ -59,10 +59,16 @@ export const MessageControlPanel = ({
         </button>
       </div>
       <div className="flex items-center gap-4">
-        <button className="bg-green-500 hover:bg-green-600" onClick={onMarkAllAsRead}>
+        <button
+          className="bg-green-500 hover:bg-green-600 w-1/2 lg:w-fit"
+          onClick={onMarkAllAsRead}
+        >
           Mark All as Read
         </button>
-        <button className="bg-red-500  hover:bg-red-600" onClick={onClearChatHistory}>
+        <button
+          className="bg-red-500  hover:bg-red-600 w-1/2 lg:w-fit"
+          onClick={onClearChatHistory}
+        >
           Clear History
         </button>
       </div>
