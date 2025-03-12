@@ -24,6 +24,10 @@ managing event-based data streams efficiently.
 - Components communicate through a shared RxJS stream.
 - Efficient state management with React Hooks and RxJS.
 
+## Screenshot
+
+![app-screenshot](./public/app-screenshot.webp)
+
 ## Technologies Used
 
 ![React](https://img.shields.io/badge/React-20232a?style=for-the-badge&logo=react&logoColor=61dafb)
