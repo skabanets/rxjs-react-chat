@@ -28,7 +28,7 @@ const addNewMessage = (sender: Sender, text: string) => {
   const newMessage: Message = {
     sender,
     text,
-    unread: sender === Sender.User,
+    unread: sender === Sender.Chatbot,
     date: new Date(),
   };
 

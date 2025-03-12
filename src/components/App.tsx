@@ -1,16 +1,43 @@
-import { Header, MessagesStream } from '../components';
+import { useEffect, useState } from 'react';
+
+import { Header, MessageControlPanel, MessagesStream } from '../components';
+
+import { addNewMessage, clearChat, getMessages, markAllAsRead } from '../store';
+import { type Message, Sender } from '../types';
 
 export const App = () => {
+  const [messages, setMessages] = useState<Message[]>([]);
+
+  useEffect(() => {
+    const subscription = getMessages().subscribe(setMessages);
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const handleSendMessage = (text: string) => {
+    if (text.trim()) {
+      addNewMessage(Sender.User, text);
+    }
+  };
+
+  const handleMarkAllAsRead = () => {
+    markAllAsRead();
+    setMessages(prevMessages => prevMessages.map(msg => ({ ...msg, unread: false })));
+  };
+
+  const handleClearChatHistory = () => {
+    clearChat();
+    setMessages([]);
+  };
   return (
-    <div className="h-screen flex justify-center gap-4 items-center bg-gray-50">
+    <div className="h-screen flex justify-center gap-4 items-center">
       <div className="w-[80vw] md:w-[50vw] h-[90vh] shadow-md rounded-2xl border-8 border-black overflow-hidden flex flex-col">
         <Header />
-        <MessagesStream />
-        <div className="h-[80px] bg-gray-800">
-          <button className="bg-blue-500 text-white hover:bg-blue-600">Send Message</button>
-          <button className="bg-red-500 text-white hover:bg-red-600">Clear History</button>
-          <button className="bg-green-500 text-white hover:bg-green-600">Mark All as Read</button>
-        </div>
+        <MessagesStream messages={messages} />
+        <MessageControlPanel
+          onSendMessage={handleSendMessage}
+          onMarkAllAsRead={handleMarkAllAsRead}
+          onClearChatHistory={handleClearChatHistory}
+        />
       </div>
     </div>
   );

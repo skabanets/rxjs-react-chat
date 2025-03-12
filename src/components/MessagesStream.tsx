@@ -2,29 +2,28 @@ import { useEffect, useRef, useState } from 'react';
 
 import { MessageItem } from '../components';
 
-import { getMessages } from '../store';
 import { type Message } from '../types';
 
-export const MessagesStream = () => {
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [isInitialRender, setIsInitialRender] = useState(true);
+interface MessagesStreamProps {
+  messages: Message[];
+}
+
+export const MessagesStream = ({ messages }: MessagesStreamProps) => {
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
+  const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {
-    if (messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: isInitialRender ? 'instant' : 'smooth' });
-
-      if (isInitialRender) {
-        setIsInitialRender(false);
-      }
+    if (messages.length > 0 && !isInitialized) {
+      messagesEndRef.current?.scrollIntoView({ behavior: 'instant' });
+      setIsInitialized(true);
     }
-  }, [messages, isInitialRender]);
+  }, [messages, isInitialized]);
 
   useEffect(() => {
-    const subscription = getMessages().subscribe(setMessages);
-
-    return () => subscription.unsubscribe();
-  }, []);
+    if (isInitialized) {
+      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [messages]);
 
   return (
     <div className="flex-1 p-4 bg-gray-700 overflow-y-auto">
