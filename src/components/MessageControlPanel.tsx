@@ -1,8 +1,11 @@
 import { useState } from 'react';
 import { IoSend } from 'react-icons/io5';
 
+import { getRandomDelay, handleBotResponse } from '../helpers';
+import { Sender } from '../types';
+
 interface MessageControlPanelProps {
-  onSendMessage: (text: string) => void;
+  onSendMessage: (text: string, sender: Sender) => void;
   onMarkAllAsRead: () => void;
   onClearChatHistory: () => void;
 }
@@ -16,7 +19,22 @@ export const MessageControlPanel = ({
 
   const handleSendMessage = () => {
     if (newMessage.trim()) {
-      onSendMessage(newMessage);
+      onSendMessage(newMessage, Sender.User);
+
+      const botReply = handleBotResponse(newMessage.trim());
+
+      if (Array.isArray(botReply)) {
+        botReply.forEach((response, index) => {
+          setTimeout(() => {
+            onSendMessage(response, Sender.Chatbot);
+          }, getRandomDelay() * index);
+        });
+      } else {
+        setTimeout(() => {
+          onSendMessage(botReply, Sender.Chatbot);
+        }, getRandomDelay());
+      }
+
       setNewMessage('');
     }
   };

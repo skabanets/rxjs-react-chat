@@ -4,18 +4,32 @@ import { Header, MessageControlPanel, MessagesStream } from '../components';
 
 import { addNewMessage, clearChat, getMessages, markAllAsRead } from '../store';
 import { type Message, Sender } from '../types';
+import { handleBotResponse } from '../helpers';
 
 export const App = () => {
   const [messages, setMessages] = useState<Message[]>([]);
+  const [messagesLoaded, setMessagesLoaded] = useState(false);
 
   useEffect(() => {
-    const subscription = getMessages().subscribe(setMessages);
+    const subscription = getMessages().subscribe(newMessages => {
+      setMessages(newMessages);
+      setMessagesLoaded(true);
+    });
+
     return () => subscription.unsubscribe();
   }, []);
 
-  const handleSendMessage = (text: string) => {
+  useEffect(() => {
+    if (messagesLoaded && messages.length === 0) {
+      const greetingBotReply = handleBotResponse('/hello');
+
+      handleSendMessage(greetingBotReply as string, Sender.Chatbot);
+    }
+  }, [messages, messagesLoaded]);
+
+  const handleSendMessage = (text: string, sender: Sender) => {
     if (text.trim()) {
-      addNewMessage(Sender.User, text);
+      addNewMessage(text, sender);
     }
   };
 

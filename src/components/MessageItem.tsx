@@ -1,4 +1,5 @@
 import { formatTimestamp } from '../helpers';
+import { markAllAsRead } from '../store';
 
 import { Sender, type Message } from '../types';
 
@@ -11,6 +12,12 @@ export const MessageItem = ({ message }: MessageProps) => {
 
   const timestamp = formatTimestamp(date);
 
+  const handleMessageClick = (unread: boolean) => {
+    if (unread) {
+      markAllAsRead();
+    }
+  };
+
   return (
     <li
       className={`relative p-3 max-w-[70%] rounded-2xl z-20 text-white ${
@@ -22,6 +29,7 @@ export const MessageItem = ({ message }: MessageProps) => {
           ? `after:border-l-[26px] after:border-l-[#289df6] after:bottom-0`
           : `after:border-r-[26px] after:border-r-[#1159ac] after:bottom-0`
       }  ${unread ? 'blur-sm cursor-pointer' : 'blur-none cursor-default'}`}
+      onClick={() => handleMessageClick(unread)}
     >
       <p>{text}</p>
       <p

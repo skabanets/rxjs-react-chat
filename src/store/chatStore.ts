@@ -24,16 +24,21 @@ const getMessages = () => messageSubject$.asObservable();
 const getUnreadCount = () =>
   messageSubject$.pipe(map(messages => messages.filter(msg => msg.unread).length));
 
-const addNewMessage = (sender: Sender, text: string) => {
+const addNewMessage = (text: string, sender: Sender) => {
   const newMessage: Message = {
-    sender,
     text,
+    sender,
     unread: sender === Sender.Chatbot,
     date: new Date(),
   };
 
   const currentMessages = messageSubject$.getValue();
-  const updatedMessages = [...currentMessages, newMessage];
+  const updatedMessages = [
+    ...(sender === Sender.User
+      ? currentMessages.map(msg => ({ ...msg, unread: false }))
+      : currentMessages),
+    newMessage,
+  ];
 
   messageSubject$.next(updatedMessages);
 
