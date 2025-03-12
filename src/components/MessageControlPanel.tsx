@@ -45,6 +45,11 @@ export const MessageControlPanel = ({
         <input
           value={newMessage}
           onChange={e => setNewMessage(e.target.value)}
+          onKeyDown={e => {
+            if (e.key === 'Enter' && newMessage.trim()) {
+              handleSendMessage();
+            }
+          }}
           placeholder="Type a message"
           className="border border-blue-700 px-2.5 py-3 rounded-xl outline-none w-full bg-gray-600 hover:border-blue-500 focus-visible:border-blue-500"
         />
