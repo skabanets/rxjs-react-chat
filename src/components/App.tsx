@@ -4,7 +4,7 @@ import { Header, MessageControlPanel, MessagesStream } from '../components';
 
 import { addNewMessage, clearChat, getMessages, markAllAsRead } from '../store';
 import { type Message, Sender } from '../types';
-import { handleBotResponse } from '../helpers';
+import { getRandomDelay, handleBotResponse } from '../helpers';
 
 export const App = () => {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -23,7 +23,9 @@ export const App = () => {
     if (messagesLoaded && messages.length === 0) {
       const greetingBotReply = handleBotResponse('/hello');
 
-      handleSendMessage(greetingBotReply as string, Sender.Chatbot);
+      setTimeout(() => {
+        handleSendMessage(greetingBotReply as string, Sender.Chatbot);
+      }, getRandomDelay());
     }
   }, [messages, messagesLoaded]);
 
