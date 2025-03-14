@@ -67,13 +67,13 @@ export const MessageControlPanel = ({
           label="Read All"
           onClick={onMarkAllAsRead}
           variant="secondary"
-          className="min-w-[120px]"
+          className="!min-w-[120px]"
         />
         <ChatButton
           label="Clear History"
           onClick={onClearChatHistory}
           variant="danger"
-          className="min-w-[120px]"
+          className="!min-w-[120px]"
         />
       </div>
     </div>
