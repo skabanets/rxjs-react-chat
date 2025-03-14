@@ -2,9 +2,16 @@
 
 ## Introduction
 
-This project is a simple chat application built with **React**, **RxJS**, and **React Hooks** for
-state management. It demonstrates how RxJS can be used to handle reactive data streams in a React
-application.
+This project is a simple chatbot application built with **React**, **RxJS**, and **React Hooks** for
+state management. It simulates a chatbot that responds based on pre-defined scripts. The application
+uses **RxJS** to handle reactive data streams efficiently. Additionally, a custom UI library,
+**[rxjs-chat-ui-lib](https://www.npmjs.com/package/rxjs-chat-ui-lib)**, is used for the components
+and user interface.
+
+To get started, install the custom UI library with:
+
+```bash
+npm install rxjs-chat-ui-lib
 
 ## What is RxJS?
 
@@ -34,3 +41,4 @@ managing event-based data streams efficiently.
 ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
 ![RxJS](https://img.shields.io/badge/RxJS-%23B7178C.svg?style=for-the-badge&logo=reactivex&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
+```
