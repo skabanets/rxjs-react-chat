@@ -3,7 +3,7 @@ import { ChatMessage } from 'rxjs-chat-ui-lib';
 import { formatTimestamp } from '../helpers';
 import { markAllAsRead } from '../store';
 
-import type { Message } from '../types';
+import { Sender, Message } from '../types';
 
 interface MessageProps {
   message: Message;
@@ -14,10 +14,8 @@ export const MessageItem = ({ message }: MessageProps) => {
 
   const timestamp = formatTimestamp(date);
 
-  const handleMessageClick = (unread: boolean) => {
-    if (unread) {
-      markAllAsRead();
-    }
+  const handleMessageClick = () => {
+    markAllAsRead();
   };
 
   return (
@@ -26,7 +24,7 @@ export const MessageItem = ({ message }: MessageProps) => {
       text={text}
       unread={unread}
       timestamp={timestamp}
-      onMessageClick={handleMessageClick}
+      {...(sender === Sender.Chatbot && unread ? { onMessageClick: handleMessageClick } : {})}
     />
   );
 };
