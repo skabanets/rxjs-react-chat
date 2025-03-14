@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { IoSend } from 'react-icons/io5';
+import { ChatButton } from 'rxjs-chat-ui-lib';
 
 import { getRandomDelay, handleBotResponse } from '../helpers';
 import { Sender } from '../types';
@@ -41,7 +42,7 @@ export const MessageControlPanel = ({
 
   return (
     <div className="lg:h-[100px] px-4 py-5 bg-gray-800 flex justify-between flex-col lg:flex-row gap-4">
-      <div className="w-full lg:w-[62%] flex items-center gap-2">
+      <div className="w-full lg:w-[70%] flex items-center gap-4">
         <input
           value={newMessage}
           onChange={e => setNewMessage(e.target.value)}
@@ -51,31 +52,29 @@ export const MessageControlPanel = ({
             }
           }}
           placeholder="Type a message"
-          className="border border-blue-700 px-2.5 py-3 rounded-xl outline-none w-full bg-gray-600 hover:border-blue-500 focus-visible:border-blue-500"
+          className="h-[48px] border border-blue-700 px-2.5 py-3 rounded-xl outline-none w-full bg-gray-600 hover:border-blue-500 focus-visible:border-blue-500"
         />
-        <button
-          className={`bg-blue-500 flex items-center justify-center hover:bg-blue-600 ${
-            !newMessage.trim() ? 'opacity-50 !cursor-not-allowed' : ''
-          }`}
+        <ChatButton
+          label=""
           onClick={handleSendMessage}
           disabled={!newMessage.trim()}
-        >
-          <IoSend className="w-6 h-6 fill-white" />
-        </button>
+          variant="primary"
+          icon={<IoSend className="w-6 h-6 fill-white" />}
+        />
       </div>
       <div className="flex items-center gap-4">
-        <button
-          className="bg-green-500 hover:bg-green-600 w-1/2 lg:w-fit"
+        <ChatButton
+          label="Read All"
           onClick={onMarkAllAsRead}
-        >
-          Mark All as Read
-        </button>
-        <button
-          className="bg-red-500  hover:bg-red-600 w-1/2 lg:w-fit"
+          variant="secondary"
+          className="min-w-[120px]"
+        />
+        <ChatButton
+          label="Clear History"
           onClick={onClearChatHistory}
-        >
-          Clear History
-        </button>
+          variant="danger"
+          className="min-w-[120px]"
+        />
       </div>
     </div>
   );

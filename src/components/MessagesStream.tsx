@@ -26,7 +26,7 @@ export const MessagesStream = ({ messages }: MessagesStreamProps) => {
   }, [messages]);
 
   return (
-    <div className="flex-1 p-4 bg-gray-700 overflow-y-auto">
+    <div className="flex-1 p-4 bg-gray-700 overflow-y-auto overflow-x-hidden">
       <ul className="flex flex-col gap-6">
         {messages.map((msg, index) => (
           <MessageItem key={index} message={msg} />
